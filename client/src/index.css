@@ -1,0 +1,26 @@
+main {
+  min-height: 80vh;
+}
+
+h3 {
+  padding-top: 1rem !important;
+}
+
+h1 {
+  font-size: 1.8rem !important;
+  padding: 1rem 0 !important;
+}
+
+h2 {
+  font-size: 1.4rem !important;
+  padding: 0.5rem 0 !important;
+}
+
+.rating span {
+  margin: 0.05rem;
+}
+
+.responsive-img {
+  width: 100%;
+  height: auto;
+}
