@@ -1,9 +1,12 @@
 import React from 'react';
-import { Card } from 'react-bootstrap';
+import {useDispatch} from 'react-redux';
+import { Card, Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import Rating from '../components/Rating';
+import { addToCart } from '../actions/cartActions';
 
 const Product = ({ product }) => {
+  const dispatch = useDispatch();
   return (
     <div>
       <Card className='my-3 p-3 rounded'>
@@ -23,6 +26,7 @@ const Product = ({ product }) => {
             />
           </Card.Text>
           <Card.Text as='h3'>${product.price}</Card.Text>
+          <Button type='button' className='btn-block' onClick={() => dispatch(addToCart(product._id, 1))}>ADD to Cart</Button>
         </Card.Body>
       </Card>
     </div>

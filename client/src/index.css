@@ -24,3 +24,50 @@ h2 {
   width: 100%;
   height: auto;
 }
+
+.main-top {
+  margin-top: 71px;
+}
+
+.navbar-height {
+  height: 60px;
+  padding: 0px !important;
+}
+
+.cor-top {
+  margin-top: -14px;
+}
+
+.cor-height {
+  height: 520px;
+}
+
+.carousel-caption {
+  bottom: 36% !important;
+}
+
+.cor-caption {
+  background-color: rgba(189, 199, 199, 0.4);
+  border-radius: 20px;
+}
+
+.cor-title {
+  font-size: 40px;
+  font-weight: 900 !important;
+}
+
+.cor-subtitle {
+  font-size: 25px;
+  font-weight: 900 !important;
+  color: #1a1a1a;
+}
+
+.cart-basket {
+  position: relative;
+  top: -10px;
+  font-size: .6rem;
+  right: 50px;
+  padding: 2px 4px;
+  background-color: #418deb;
+  border-radius: 50%;
+}
