@@ -65,6 +65,7 @@ const CartScreen = ({ match, location, history }) => {
                   <Col md={2}>
                     <Form.Control
                       as='select'
+                      className='item-quantity'
                       value={item.qty}
                       onChange={(e) => {
                         dispatch(

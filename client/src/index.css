@@ -71,3 +71,8 @@ h2 {
   background-color: #418deb;
   border-radius: 50%;
 }
+
+.item-quantity {
+  width: auto !important;
+}
+
