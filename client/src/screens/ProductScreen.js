@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from 'react';
 import Rating from '../components/Rating';
 import Message from '../components/Message';
@@ -11,30 +12,58 @@ import {
   Card,
   Button,
   Form,
+  Container,
 } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { productDetails } from '../actions/productActions';
+import { addToCart } from '../actions/cartActions';
+import { formatAsCurrency, getDiscountedPrice } from '../utils/commonUtil';
 
 const ProductScreen = ({ history, match }) => {
   const [qty, setQty] = useState(1);
   const dispatch = useDispatch();
   const prodDetails = useSelector((state) => state.productDetails);
   const { loading, error, product } = prodDetails;
+  const [msg, setMsg] = useState({});
+  const [isProductAdded, setIsProductAdded] = useState(false);
+  const cart = useSelector((state) => state.cart);
+  const { cartItems } = cart;
 
   useEffect(() => {
     const id = match.params.id;
     dispatch(productDetails(id));
   }, [match, dispatch]);
 
+  useEffect(() => {
+    if (isProductAdded) {
+      setMsg({ text: "Product added to cart.", variant: "info" })
+      setTimeout(() => {
+        setMsg({});
+      }, 2000);
+    }
+  }, [cartItems]);
+
   const addToCartHandler = () => {
-    history.push(`/cart/${match.params.id}?qty=${qty}`);
+    dispatch(addToCart(match.params.id, qty));
+    setIsProductAdded(true);
   };
 
   return (
     <>
-      <Link className='btn btn-light mb-3' to='/'>
-        Go Back
-      </Link>
+      <Container>
+        <Row>
+          <Col>
+            <Link className='btn btn-light mb-3' to='/'>
+              Go Back
+            </Link>
+          </Col>
+          <Col>
+            {msg.text &&
+              <Message variant={msg.variant}>{msg.text}</Message>
+            }
+          </Col>
+        </Row>
+      </Container>
       {loading ? (
         <Loader />
       ) : error ? (
@@ -56,10 +85,40 @@ const ProductScreen = ({ history, match }) => {
               <ListGroup.Item>
                 <Rating
                   rating={product.rating || 0}
-                  numReviews={product.numReviews || 0}
+                  numRatings={product.numRatings || 0}
                 ></Rating>
               </ListGroup.Item>
-              <ListGroup.Item>Price: ${product?.price}</ListGroup.Item>
+              <ListGroup.Item>
+                {product.discount > 0 ?
+                  <>
+                    <Row>
+                      <Col>Price:</Col>
+                      <Col as='h5' className='product-screen-price'>
+                        <span className='strikethrough'>₹{formatAsCurrency(product.price)}</span>&nbsp;
+                      </Col>
+                    </Row>
+                    <Row>
+                      <Col></Col>
+                      <Col as='h6' className='product-screen-price'>
+                        {product.discountType === '%' ?
+                          <span className='discount-display'>({product.discount}{product.discountType} off)</span>
+                          :
+                          <span className='discount-display'>({product.discountType}{product.discount} off)</span>
+                        }
+                      </Col>
+                    </Row>
+                    <Row>
+                      <Col></Col>
+                      <Col as='h5' className='product-screen-price'>₹{formatAsCurrency(getDiscountedPrice(product))}</Col>
+                    </Row>
+                  </>
+                  :
+                  <Row>
+                    <Col>Price:</Col>
+                    <Col as='h5' className='product-screen-price'>₹{formatAsCurrency(product.price)}</Col>
+                  </Row>
+                }
+              </ListGroup.Item>
               <ListGroup.Item>
                 Description: {product?.description}
               </ListGroup.Item>
@@ -71,7 +130,7 @@ const ProductScreen = ({ history, match }) => {
                 <ListGroup.Item>
                   <Row>
                     <Col>Price</Col>
-                    <Col>${product?.price}</Col>
+                    <Col>₹{formatAsCurrency(getDiscountedPrice(product))}</Col>
                   </Row>
                 </ListGroup.Item>
                 <ListGroup.Item>
@@ -110,7 +169,7 @@ const ProductScreen = ({ history, match }) => {
                     type='button'
                     disabled={product.countInStock === 0}
                   >
-                    Add To Cart
+                    {product.countInStock > 0 ? 'ADD to Cart' : 'Out of Stock'}
                   </Button>
                 </ListGroup.Item>
               </ListGroup>

@@ -1,8 +1,15 @@
 import mongoose from 'mongoose';
+import { discountTypes } from '../utils/enumUtil.js';
+
+const discTypes = Object.values(discountTypes);
 
 const reviewSchema = mongoose.Schema(
   {
-    name: { type: String, required: true },
+    user: {
+      type: mongoose.Schema.Types.ObjectId,
+      required: true,
+      ref: 'User',
+    },
     rating: { type: Number, required: true },
     comment: { type: String, required: false },
   },
@@ -44,7 +51,7 @@ const productSchema = mongoose.Schema(
       required: true,
       default: 0,
     },
-    numReviews: {
+    numRatings: {
       type: Number,
       required: true,
       default: 0,
@@ -53,6 +60,16 @@ const productSchema = mongoose.Schema(
       type: Number,
       required: true,
       default: 0,
+    },
+    discount: {
+      type: Number,
+      required: true,
+      default: 0
+    },
+    discountType: {
+      type: String,
+      enum: discTypes,
+      required: true
     },
     countInStock: {
       type: Number,

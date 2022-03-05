@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const Rating = ({ rating, numReviews, color }) => {
+const Rating = ({ rating, numRatings, color }) => {
   let starRating = () => {
     let stars = [];
     for (let index = 0; index < 5; index++) {
@@ -27,7 +27,7 @@ const Rating = ({ rating, numReviews, color }) => {
     <div className='rating'>
       {starRating()}
       {/* <br /> */}
-      <span>{numReviews && numReviews} reviews</span>
+      <span>{numRatings && numRatings} reviews</span>
     </div>
   );
 };
@@ -38,7 +38,7 @@ Rating.defaultProps = {
 
 Rating.propTypes = {
   rating: PropTypes.number.isRequired,
-  numReviews: PropTypes.number.isRequired,
+  numRatings: PropTypes.number.isRequired,
   color: PropTypes.string,
 };
 export default Rating;

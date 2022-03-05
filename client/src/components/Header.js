@@ -1,19 +1,18 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useSelector } from 'react-redux';
 import { Navbar, Nav, Container } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 
 const Header = () => {
   const cart = useSelector((state) => state.cart);
+  const userLogin = useSelector((state) => state.userLogin);
+  const {userInfo} = userLogin;
   const { cartItems } = cart;
-  useEffect(() => {
-    console.log(cartItems);
-  }, [cartItems])
 
   return (
     <div>
       <header>
-        <Navbar className='navbar-height' bg='dark' variant='dark' expand='lg' collapseOnSelect fixed="top">
+        <Navbar className='py-2' bg='dark' variant='dark' expand='lg' collapseOnSelect fixed="top">
           <Container>
             <LinkContainer to='/'>
               <Navbar.Brand>ElectroMart</Navbar.Brand>

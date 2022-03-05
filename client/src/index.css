@@ -35,7 +35,7 @@ h2 {
 }
 
 .cor-top {
-  margin-top: -14px;
+  margin-top: -18px;
 }
 
 .cor-height {
@@ -47,7 +47,7 @@ h2 {
 }
 
 .cor-caption {
-  background-color: rgba(189, 199, 199, 0.4);
+  background-color: rgba(189, 199, 199, 0.3);
   border-radius: 20px;
 }
 
@@ -65,7 +65,7 @@ h2 {
 .cart-basket {
   position: relative;
   top: -10px;
-  font-size: .6rem;
+  font-size: 0.6rem;
   right: 50px;
   padding: 2px 4px;
   background-color: #418deb;
@@ -76,3 +76,38 @@ h2 {
   width: auto !important;
 }
 
+.strikethrough {
+  text-decoration: line-through;
+  color: rgba(0, 0, 0, 0.5);
+}
+
+.discount-display {
+  color: red;
+}
+
+#product-price {
+  margin-top: 10px;
+  height: 50px;
+  position: relative;
+}
+
+#no-discount-price {
+  position: absolute;
+  bottom: 0;
+  margin-bottom: 8px;
+}
+
+.product-screen-price {
+  margin-left: -22px;
+}
+
+.align-right {
+  text-align: right;
+  margin-right: 12px;
+}
+
+@media (max-width: 990px) {
+  .cor-top {
+    margin-top: -22px;
+  }
+} 
