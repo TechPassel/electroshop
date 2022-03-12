@@ -19,8 +19,8 @@ app.listen(
   )
 );
 
-app.use('/products', productRoutes);
-app.use('/users', userRoutes);
+app.use('/product', productRoutes);
+app.use('/user', userRoutes);
 
 app.use(notFound);
 

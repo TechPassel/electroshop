@@ -6,10 +6,12 @@ import Message from '../components/Message';
 import { login } from '../actions/userActions';
 import FormContainer from '../components/FormContainer';
 import queryString from 'query-string';
+import Loader from '../components/Loader';
 
 const LoginScreen = ({ location, history }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [messages, setMessages] = useState([]);
 
   const parsedQueryString = queryString.parse(location.search);
   const redirect = parsedQueryString.redirect
@@ -17,8 +19,16 @@ const LoginScreen = ({ location, history }) => {
     : null;
 
   const submitHandler = (e) => {
+    setMessages([]);
     e.preventDefault();
-    dispatch(login(email, password));
+    let errorMessages = [];
+    Object.entries({ email, password }).forEach(e => {
+      if (!e[1] || e[1] === '') {
+        errorMessages.push(e[0] + " is required.");
+      }
+    })
+    setMessages(errorMessages);
+    if (errorMessages.length === 0) dispatch(login(email, password));
   };
 
   const dispatch = useDispatch();
@@ -34,8 +44,11 @@ const LoginScreen = ({ location, history }) => {
   return (
     <FormContainer>
       <h1>Sign In</h1>
+      {messages.length > 0 && messages.map((e, i) =>
+        <Message variant='danger' key={i}>{e}</Message>
+      )}
       {error && <Message variant='danger'>{error}</Message>}
-      {loading && <loader />}
+      {loading && <Loader />}
       <Form onSubmit={submitHandler}>
         <Form.Group controlId='email'>
           <Form.Label>Email Address</Form.Label>

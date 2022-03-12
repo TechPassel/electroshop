@@ -12,7 +12,7 @@ export const listProducts = () => async (dispatch) => {
   try {
     dispatch({ type: PRODUCT_LIST_REQUEST });
 
-    const response = await Axios.get('/products');
+    const response = await Axios.get('/product');
     dispatch({ type: PRODUCT_LIST_SUCCESS, payload: response.data });
   } catch (error) {
     dispatch({
@@ -29,7 +29,7 @@ export const productDetails = (id) => async (dispatch) => {
   try {
     dispatch({ type: PRODUCT_DETAILS_REQUEST });
 
-    const response = await Axios.get(`/products/${id}`);
+    const response = await Axios.get(`/product/${id}`);
     dispatch({ type: PRODUCT_DETAILS_SUCCESS, payload: response.data });
   } catch (error) {
     dispatch({

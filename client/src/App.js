@@ -6,6 +6,8 @@ import { BrowserRouter as Router, Route } from 'react-router-dom';
 import ProductScreen from './screens/ProductScreen';
 import CartScreen from './screens/CartScreen';
 import LoginScreen from './screens/LoginScreen';
+import RegisterScreen from './screens/RegisterScreen';
+import ProfileScreen from './screens/ProfileScreen';
 
 const App = () => {
   return (
@@ -13,12 +15,13 @@ const App = () => {
       <Header />
       <main className='py-1 main-top'>
         <Container>
-          {/* <HomeScreen /> */}
           <Route path='/' component={HomeScreen} exact />
           <Route path='/product/:id' component={ProductScreen} />
           <Route path='/cart/:id?' component={CartScreen} />
           {/* Here '?' is used to make 'id' as optional.It has nothing to do with query string */}
           <Route path='/login' component={LoginScreen}></Route>
+          <Route path='/register' component={RegisterScreen}></Route>
+          <Route path='/profile' component={ProfileScreen}></Route>
         </Container>
       </main>
       <Footer />
