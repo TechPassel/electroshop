@@ -29,9 +29,10 @@ const CartScreen = ({ match, location, history }) => {
     bill['mrpDiscount'] = cartItems.reduce((acc, item) => acc + item.qty * (item.discountType === "₹" ?
       Number(item.discount) : Math.round(item.price * item.discount / 100)), 0);
     bill['couponDiscount'] = 0;
-    bill['deliveryCharge'] = 0;
-    //Here we are considering couponDiscount and deliveryCharge as 0. But later we need to implement it. 
-    bill['finalAmount'] = (bill.totalMrp + bill.deliveryCharge) - (bill.mrpDiscount + bill.couponDiscount);
+    bill['shippingCharge'] = bill['totalMrp'] - (bill['mrpDiscount'] + bill['couponDiscount']) > 1000 ? 0 : 100;
+    bill['taxAmount'] = 0;
+    //Here we are considering tax, couponDiscount and shippingCharge as 0. But later we need to implement it. 
+    bill['finalAmount'] = (bill.totalMrp + bill.shippingCharge) - (bill.mrpDiscount + bill.couponDiscount);
     setBill(bill);
   }, [cartItems])
 
@@ -65,30 +66,26 @@ const CartScreen = ({ match, location, history }) => {
                   <Col md={3}>
                     <Link to={`/product/${item.product}`}>{item.name}</Link>
                   </Col>
-                  <Col md={3}>
-                    {/* <Row>
-                      <Col>₹{formatAsCurrency(getDiscountedPrice(item))}</Col>
-                      <Col>₹{formatAsCurrency(getDiscountedPrice(item))}</Col>
-                    </Row> */}
+                  <Col md={4}>
                     {item.discount > 0 ?
                       <>
                         <Row>
-                          <Col className='product-screen-price'>
+                          <Col>
                             <span className='strikethrough'>₹{formatAsCurrency(item.price)}</span>&nbsp;
                             {item.discountType === '%' ?
                               <span className='discount-display'>({item.discount}{item.discountType} off)</span>
                               :
-                              <span className='discount-display'>({item.discountType}{item.discount} off)</span>
+                              <span className='discount-display'>({item.discountType}{formatAsCurrency(item.discount)} off)</span>
                             }
                           </Col>
                         </Row>
                         <Row>
-                          <Col className='product-screen-price'>₹{formatAsCurrency(getDiscountedPrice(item))}</Col>
+                          <Col>₹{formatAsCurrency(getDiscountedPrice(item))}</Col>
                         </Row>
                       </>
                       :
                       <Row>
-                        <Col className='product-screen-price'>₹{formatAsCurrency(item.price)}</Col>
+                        <Col>₹{formatAsCurrency(item.price)}</Col>
                       </Row>
                     }
                   </Col>
@@ -110,7 +107,7 @@ const CartScreen = ({ match, location, history }) => {
                       ))}
                     </Form.Control>
                   </Col>
-                  <Col md={2}>
+                  <Col md={1}>
                     <Button
                       type='button'
                       variant='light'
@@ -154,12 +151,14 @@ const CartScreen = ({ match, location, history }) => {
                       <Col className='align-right'>- ₹{formatAsCurrency(bill?.couponDiscount)}</Col>
                     </Row>
                   }
-                  {bill.deliveryCharge > 0 &&
-                    <Row>
-                      <Col>Delivery Charge:</Col>
-                      <Col className='align-right'>₹{formatAsCurrency(bill?.deliveryCharge)}</Col>
-                    </Row>
-                  }
+                  <Row>
+                    <Col>Delivery Charge:</Col>
+                    <Col className='align-right'>₹{formatAsCurrency(bill?.shippingCharge)}</Col>
+                  </Row>
+                  <Row>
+                    <Col>Tax:</Col>
+                    <Col className='align-right'>₹{formatAsCurrency(bill?.taxAmount)}</Col>
+                  </Row>
                   <hr />
                   <Row>
                     <Col>Total Amount:</Col>

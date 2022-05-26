@@ -1,4 +1,7 @@
 import mongoose from 'mongoose';
+import { discountTypes } from '../utils/enumUtil.js';
+
+const discTypes = Object.values(discountTypes);
 
 const orderSchema = mongoose.Schema(
   {
@@ -13,6 +16,16 @@ const orderSchema = mongoose.Schema(
         qty: { type: Number, required: true },
         image: { type: String, required: true },
         price: { type: Number, required: true },
+        discount: {
+          type: Number,
+          required: true,
+          default: 0
+        },
+        discountType: {
+          type: String,
+          enum: discTypes,
+          required: true
+        },
         product: {
           type: mongoose.Schema.Types.ObjectId,
           required: true,
@@ -20,11 +33,12 @@ const orderSchema = mongoose.Schema(
         },
       },
     ],
-    shiippingAddress: {
+    shippingAddress: {
       address: { type: String, required: true },
       city: { type: String, required: true },
-      postalCode: { type: String, required: true },
+      state: { type: String, required: true },
       country: { type: String, required: true },
+      postalCode: { type: String, required: true },
     },
     paymentMethod: {
       type: String,
@@ -36,20 +50,30 @@ const orderSchema = mongoose.Schema(
       update_time: { type: String },
       email_address: { type: String },
     },
-    taxPrice: {
+    taxAmount: {
+      type: Number,
+      required: false,
+      default: 0.0,
+    },
+    shippingCharge: {
       type: Number,
       required: true,
       default: 0.0,
     },
-    shippingPrice: {
+    totalMrp: {
       type: Number,
       required: true,
       default: 0.0,
     },
-    totalPrice: {
+    coupon: {
+      type: mongoose.Schema.Types.ObjectId,
+      required: false,
+      ref: 'Coupon',
+    },
+    couponDiscount: {
       type: Number,
-      required: true,
-      default: 0.0,
+      required: false,
+      default: 0.0
     },
     isPaid: {
       type: Boolean,

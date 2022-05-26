@@ -1,4 +1,5 @@
-import Axios from 'axios';
+// import Axios from 'axios';
+import Axios from '../utils/customAxios';
 import {
   PRODUCT_LIST_REQUEST,
   PRODUCT_LIST_SUCCESS,

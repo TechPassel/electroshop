@@ -16,9 +16,8 @@ const protect = asyncHandler(async (req, res, next) => {
         password: 0,
       });
     } catch (error) {
-      console.log(error, 'error');
-      // res.send(401)
-      throw new Error('Some error occured.Please try again');
+      res.status(401);
+      throw new Error('Token is invalid or expired. Please login again.');
     }
   }
 

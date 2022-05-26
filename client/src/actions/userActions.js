@@ -1,4 +1,5 @@
-import Axios from 'axios';
+// import Axios from 'axios';
+import Axios from '../utils/customAxios';
 import {
   USER_LOGIN_REQUEST,
   USER_LOGIN_SUCCESS,

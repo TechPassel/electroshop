@@ -8,6 +8,10 @@ import CartScreen from './screens/CartScreen';
 import LoginScreen from './screens/LoginScreen';
 import RegisterScreen from './screens/RegisterScreen';
 import ProfileScreen from './screens/ProfileScreen';
+import ShippingScreen from './screens/ShippingScreen';
+import PaymentScreen from './screens/PaymentScreen';
+import PlaceOrderScreen from './screens/PlaceOrderScreen';
+import OrderConfirmation from './screens/OrderConfirmation';
 
 const App = () => {
   return (
@@ -18,10 +22,14 @@ const App = () => {
           <Route path='/' component={HomeScreen} exact />
           <Route path='/product/:id' component={ProductScreen} />
           <Route path='/cart/:id?' component={CartScreen} />
+          <Route path='/shipping' component={ShippingScreen} />
+          <Route path='/payment' component={PaymentScreen} />
+          <Route path='/placeorder' component={PlaceOrderScreen} />
           {/* Here '?' is used to make 'id' as optional.It has nothing to do with query string */}
-          <Route path='/login' component={LoginScreen}></Route>
-          <Route path='/register' component={RegisterScreen}></Route>
-          <Route path='/profile' component={ProfileScreen}></Route>
+          <Route path='/login' component={LoginScreen} />
+          <Route path='/register' component={RegisterScreen} />
+          <Route path='/profile' component={ProfileScreen} />
+          <Route path='/order/:id' component={OrderConfirmation} />
         </Container>
       </main>
       <Footer />

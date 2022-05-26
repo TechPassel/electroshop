@@ -103,7 +103,7 @@ const ProductScreen = ({ history, match }) => {
                         {product.discountType === '%' ?
                           <span className='discount-display'>({product.discount}{product.discountType} off)</span>
                           :
-                          <span className='discount-display'>({product.discountType}{product.discount} off)</span>
+                          <span className='discount-display'>({product.discountType}{formatAsCurrency(product.discount)} off)</span>
                         }
                       </Col>
                     </Row>
